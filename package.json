@@ -1,0 +1,72 @@
+{
+  "name": "dryfs",
+  "publisher": "dryfs",
+  "displayName": "Dont Repeat Your Folder Structure",
+  "description": "Automatically create folder structures adhering to the DRY principle. Avoid the repetition of defining folder structures manually",
+  "version": "1.0.0",
+  "icon": "images/dryfs_logo.webp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JustInCaseTools/do-not-repeat-folder-structure"
+  },
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dryfs.makeMyFolder",
+        "title": "Make My Folder"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "dryfs.makeMyFolder",
+          "when": "explorerViewletVisible"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "release": "semantic-release"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.6",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.82.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "@vscode/test-electron": "^2.3.4",
+    "eslint": "^8.47.0",
+    "glob": "^10.3.3",
+    "jest": "^29.7.0",
+    "mocha": "^10.2.0",
+    "semantic-release": "^24.0.0",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "vsce": "^2.15.0"
+  },
+  "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
+}

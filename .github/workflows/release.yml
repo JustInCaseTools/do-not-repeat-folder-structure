@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+          pnpm config set store-dir ~/.pnpm-store
+
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Update version in package.json
+        if: github.ref_type == 'branch'
+        run: |
+          jq --arg build "$GITHUB_RUN_NUMBER" --arg commit "${GITHUB_SHA::8}" \
+          '.version = .version + "-dev." + $build + "+" + $commit' package.json > package.json.tmp
+          mv package.json.tmp package.json
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run release
