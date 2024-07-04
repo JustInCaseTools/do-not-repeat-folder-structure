@@ -59,7 +59,7 @@ First, configure the folder and file structure in your `.vscode/settings.json` f
 
 <!-- ![usage_1](/images/usage_1.png) -->
 
-<img src="/images/usage_1.png" alt="usage_1" width="480" />
+<img src="/images/usage_1.png" alt="usage_1" width="320" />
 
 ### 4. You will be prompted to enter the **name of your new folder**. Type the desired name and press **Enter**.
 
@@ -68,7 +68,7 @@ First, configure the folder and file structure in your `.vscode/settings.json` f
 
 ### 5. The extension will automatically generate a new folder with the specified name and the predefined set of files:
 
-<img src="/images/usage_3.png" alt="usage_3" width="480" />
+<img src="/images/usage_3.png" alt="usage_3" width="320" />
 
 # Requirement
 
