@@ -1,4 +1,4 @@
-name: Release
+name: Create and Review PR
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  release:
-    name: Release
+  create_pr:
+    name: Create PR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -71,7 +71,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: prNumber,
-                reviewers: ['bo-like-chicken']  // replace with actual GitHub usernames
+                reviewers: ['bo-like-chicken']
               });
             } else {
               throw new Error("No open pull request found for branch 'update-version'");
