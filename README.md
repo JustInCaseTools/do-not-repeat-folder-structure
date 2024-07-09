@@ -82,12 +82,6 @@ If you'd like to contribute to the development of DRYFS, please create a pull re
 
 No known issues at the moment.
 
-# Release Notes
-
-## 1.0.0
-
-Introduced the "Make My Folder" feature, which allows users to quickly generate a folder structure for their project.
-
 ---
 
 **Enjoy the simplicity and efficiency of creating new components with `dryfs`!**
