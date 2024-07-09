@@ -3,7 +3,7 @@
   "publisher": "dryfs",
   "displayName": "Dont Repeat Your Folder Structure",
   "description": "Automatically create folder structures adhering to the DRY principle. Avoid the repetition of defining folder structures manually",
-  "version": "1.0.0-dev.7+80814ffe-dev.10+67b3d643",
+  "version": "1.0.0-dev.7+80814ffe-dev.10+67b3d643-dev.1+e7c1e816",
   "icon": "images/dryfs_logo.webp",
   "repository": {
     "type": "git",
