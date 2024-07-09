@@ -44,7 +44,32 @@ jobs:
           '.version = .version + "-dev." + $build + "+" + $commit' package.json > package.json.tmp
           mv package.json.tmp package.json
 
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm run release
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update version to ${{ github.sha }}
+          branch: update-version
+          title: "Automated version update"
+          body: "This PR was created automatically by the release workflow."
+
+      - name: Merge Pull Request
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Automated version update',
+              head: 'update-version',
+              base: 'main',
+              body: 'This PR was created automatically by the release workflow.'
+            });
+
+            await github.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.data.number,
+              merge_method: 'squash'
+            });
