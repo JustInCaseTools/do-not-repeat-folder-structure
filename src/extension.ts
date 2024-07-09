@@ -1,6 +1,10 @@
 import * as vscode from "vscode";
 import * as fs from "fs/promises";
 import * as path from "path";
+import { exec } from "child_process";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 /**
  * This function is called when your extension is activated.
@@ -184,6 +188,9 @@ async function createFile(
     }
 
     await fs.writeFile(filePath, content);
+
+    // Apply Prettier formatting
+    await execAsync(`npx prettier --write "${filePath}"`);
   } catch (error) {
     throw new Error(
       `Failed to create file ${filePath}: ${
