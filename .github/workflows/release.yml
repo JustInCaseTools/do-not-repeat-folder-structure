@@ -58,18 +58,21 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const pr = await github.pulls.create({
+            const { data: pullRequests } = await github.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: 'Automated version update',
               head: 'update-version',
-              base: 'main',
-              body: 'This PR was created automatically by the release workflow.'
+              state: 'open'
             });
 
-            await github.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pr.data.number,
-              merge_method: 'squash'
-            });
+            if (pullRequests.length > 0) {
+              const prNumber = pullRequests[0].number;
+              await github.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                merge_method: 'squash'
+              });
+            } else {
+              throw new Error("No open pull request found for branch 'update-version'");
+            }
