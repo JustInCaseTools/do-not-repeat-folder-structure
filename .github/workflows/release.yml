@@ -53,7 +53,7 @@ jobs:
           title: "Automated version update"
           body: "This PR was created automatically by the release workflow."
 
-      - name: Merge Pull Request
+      - name: Request Reviewers
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -67,11 +67,11 @@ jobs:
 
             if (pullRequests.length > 0) {
               const prNumber = pullRequests[0].number;
-              await github.pulls.merge({
+              await github.pulls.requestReviewers({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: prNumber,
-                merge_method: 'squash'
+                reviewers: ['bo-like-chicken']  // replace with actual GitHub usernames
               });
             } else {
               throw new Error("No open pull request found for branch 'update-version'");
